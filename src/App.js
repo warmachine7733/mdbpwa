@@ -1,11 +1,16 @@
 import React from "react";
-import LangScreen from "./components/layouts/languageScreen/index";
+import Routes from "./routes";
+import { Provider } from "react-redux";
+import ConnectedIntlProvider from "./commons/intl/ConnectedIntlProvider";
+import store from "./store/store";
 
 const App = () => {
   return (
-    <>
-      <LangScreen />
-    </>
+    <Provider store={store}>
+      <ConnectedIntlProvider>
+        <Routes />
+      </ConnectedIntlProvider>
+    </Provider>
   );
 };
 

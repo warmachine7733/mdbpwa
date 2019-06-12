@@ -2,14 +2,16 @@ import React from "react";
 import EachLangTable from "./EachLangTable";
 import Image from "../../UI/Image";
 import Text from "../../UI/Text";
-const lang = [
-  { pair: [{ en: ["Hindi", "Odia"] }, { na: ["हिंदी", "ଓଡ଼ିଆ"] }] },
-  { pair: [{ en: ["kannada", "Tamil"] }, { na: ["ಕನ್ನಡ", "தமிழ்"] }] },
-  { pair: [{ en: ["Bengali", "Gujrati"] }, { na: ["বিংগালী", "ગુજરાતી"] }] },
-  { pair: [{ en: ["Telegu", "Urdu"] }, { na: ["తెలుగు", "اردو"] }] }
-];
+import Button from "../../UI/Button";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { injectIntl } from "react-intl";
+import { selectedLanguage } from "../../../store/language/action";
+
 class LangScreen extends React.Component {
   render() {
+    const { languages, intl } = this.props;
+
     return (
       <div className="App">
         <div
@@ -28,42 +30,80 @@ class LangScreen extends React.Component {
           <Text
             className="d-flex borderless justify-content-center"
             color="#ff6f00"
-            text="select a language"
+            text="select language"
           />
           {/* language tabs*/}
           <div className="position-relative align-middle">
-            {lang.map((each, i) => {
+            {languages.map((each, i) => {
               return (
                 <div className="row m-1" key={i}>
-                  {/* for left side */}
-                  <EachLangTable
-                    color={this.state[`${each.pair[1].na[0]}`]}
-                    nativeVal={each.pair[1].na[0]}
-                    engVal={each.pair[0].en[0]}
-                  />
-                  {/* for rightside  */}
-                  <EachLangTable
-                    color={this.state[`${each.pair[1].na[0]}`]}
-                    nativeVal={each.pair[1].na[1]}
-                    engVal={each.pair[0].en[1]}
-                  />
+                  {each.pair[0].en.length === 2 ? (
+                    <>
+                      {/* for left side */}
+                      <EachLangTable
+                        className="col m-1 p-4 table table-sm table-borderless td bg-white"
+                        color={this.props.langColor[each.pair[2].key[0]]}
+                        nativeVal={each.pair[1].na[0]}
+                        engVal={each.pair[0].en[0]}
+                        langCode={each.pair[2].key[0]}
+                        selectedLanguage={this.props.selectedLanguage}
+                      />
+                      {/* for rightside  */}
+                      <EachLangTable
+                        className="col m-1 p-4 table table-sm table-borderless td bg-white"
+                        // color={this.state[`${each.pair[1].na[0]}`]}
+                        color={this.props.langColor[each.pair[2].key[1]]}
+                        nativeVal={each.pair[1].na[1]}
+                        engVal={each.pair[0].en[1]}
+                        langCode={each.pair[2].key[1]}
+                        selectedLanguage={this.props.selectedLanguage}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <EachLangTable
+                        className="col w-25 m-1 p-4 table table-md table-borderless td bg-white"
+                        color={this.props.langColor[each.pair[2].key[0]]}
+                        nativeVal={each.pair[1].na[0]}
+                        engVal={each.pair[0].en[0]}
+                        langCode={each.pair[2].key[0]}
+                        selectedLanguage={this.props.selectedLanguage}
+                      />
+                    </>
+                  )}
                 </div>
               );
             })}
           </div>
+          {/**button */}
+          <Button
+            className="btn shadow mx-auto d-block p-1 w-50 mb-5"
+            backgroundColor="#ff9f00"
+            color="white"
+            text={intl.formatMessage({ id: "proceed" })}
+          />
         </div>
       </div>
     );
   }
-  componentWillMount() {
-    lang.map(each =>
-      each.pair
-        .filter(langCode => langCode.na)
-        .map(eachLang =>
-          eachLang.na.map(eachLa => this.setState({ [eachLa]: "black" }))
-        )
-    );
-  }
-}
 
-export default LangScreen;
+  componentWillMount() {}
+}
+const mapStateToProps = state => {
+  return {
+    languages: state.language.pairedLangs,
+    langColor: state.language.langColor
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    selectedLanguage: langCode => dispatch(selectedLanguage(langCode))
+  };
+};
+export default compose(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  injectIntl
+)(LangScreen);

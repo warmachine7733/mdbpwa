@@ -5,7 +5,10 @@ import Image from "../../UI/Image";
 const EachLangTable = props => {
   return (
     <>
-      <table className="col m-1 p-4 table table-sm table-borderless td bg-white ">
+      <table
+        onClick={() => props.selectedLanguage(props.langCode)}
+        className={props.className}
+      >
         <tbody>
           <tr>
             <td

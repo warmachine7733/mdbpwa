@@ -6,7 +6,7 @@ const Image = props => {
         src={props.source}
         style={{ backgroundColor: props.backgroundColor }}
         className={props.className}
-        alt="image"
+        alt="imgComp"
       />
     </>
   );
