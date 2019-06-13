@@ -4,14 +4,19 @@ import { Provider } from "react-redux";
 import ConnectedIntlProvider from "./commons/intl/ConnectedIntlProvider";
 import store from "./store/store";
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <ConnectedIntlProvider>
-        <Routes />
-      </ConnectedIntlProvider>
-    </Provider>
-  );
-};
+class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <ConnectedIntlProvider>
+          <Routes />
+        </ConnectedIntlProvider>
+      </Provider>
+    );
+  }
+  componentWillUpdate(nextProps) {
+    console.log(window.navigator.onLine);
+  }
+}
 
 export default App;

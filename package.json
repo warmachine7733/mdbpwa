@@ -5,11 +5,13 @@
   "dependencies": {
     "mdbootstrap": "^4.8.2",
     "react": "^16.8.6",
+    "react-detect-offline": "^2.4.0",
     "react-dom": "^16.8.6",
     "react-intl": "^2.9.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-toastify": "^5.2.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"

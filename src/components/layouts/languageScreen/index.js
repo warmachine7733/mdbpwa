@@ -8,6 +8,7 @@ import { compose } from "redux";
 import { injectIntl } from "react-intl";
 import { selectedLanguage } from "../../../store/language/action";
 
+
 class LangScreen extends React.Component {
   render() {
     const { languages, intl } = this.props;

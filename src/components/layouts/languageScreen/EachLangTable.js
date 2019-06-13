@@ -27,7 +27,7 @@ const EachLangTable = props => {
             <td
               className="text-left"
               style={{
-                fontSize: "10px"
+                fontSize: "12px"
               }}
             >
               <Text text={props.engVal} />
